@@ -1,4 +1,4 @@
-import lint_roller from "./lint_roller.jpg";
+import lint_roller from "./Lint_roller.jpg";
 import shordingers_logo from "./shordingers_logo.png";
 import forever from "./forever.jpg";
 import mop_trolley from "./mop_trolley.jpeg";
