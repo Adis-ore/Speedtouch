@@ -13,7 +13,7 @@ import { Shopcontext } from "../context/Shopcontext";
 const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
-  const {setShowSearch} = useContext(Shopcontext)
+  const {setShowSearch, getCartCount} = useContext(Shopcontext)
 
   return (
     // the navbar body/ container
@@ -42,10 +42,10 @@ const Navbar = () => {
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
-      {/* containing the search and profile icon  */}
+      {/*------------------ containing the search and profile icon------------------  */}
       <div className="flex items-center gap-4">
         <FiSearch onClick={()=>setShowSearch(true)} className="cursor-pointer" />
-        {/* the profile icon */}
+        {/*------------------ the profile icon ------------------*/}
         <div className="group relative">
           <CgProfile className="w-5 cursor-pointer" />
           <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
@@ -58,17 +58,17 @@ const Navbar = () => {
         </div>
         <Link to="/cart" className="relative">
           <p className="absolute right-[-11px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
-            5
+            {getCartCount()}
           </p>
           <AiOutlineShoppingCart />
         </Link>
         <AiOutlineMenu onClick={()=>setVisible(true)} className="cursor-pointer sm:hidden" />
       </div>
-      {/* side bar menu for small screen */}
+      {/* --------------- side bar menu for small screen -------------------- */}
       <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible? 'w-full' : 'w-0'}`}>
         <div className=" flex flex-col text-gray-500">
           <div onClick={()=>setVisible(false)} className="flex items-center gap-4 p-3 cursor-pointer">
-            {/* the back function */}
+            {/*-------------------- the back function --------------------------- */}
             <IoIosArrowForward className="h-4 rotate-180" />
             <p>Back</p>
           </div>
