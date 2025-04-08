@@ -2,7 +2,7 @@ import { TbCurrencyNaira } from "react-icons/tb";
 // const { createContext } = require("react");
 import { createContext } from "react";
 import { products } from "../assets/assets";
-import { useState, useEffect } from "react";
+import { useState } from "react"; // Removed unused `useEffect`
 
 export const Shopcontext = createContext();
 
@@ -13,12 +13,11 @@ const ShopcontextProvider = (props) => {
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
 
+  //  ------------- ADD TO CART ----------------
   const addToCart = async (itemId) => {
-    let cartData = structuredClone(cartItems);
-    // console.log(cartData);/
+    let cartData = structuredClone(cartItems); // Ensure compatibility if needed
     if (cartData[itemId]) {
       cartData[itemId]["amount"] += 1;
-      // console.log(cartData);
     } else {
       cartData[itemId] = { amount: 1 };
     }
@@ -30,38 +29,38 @@ const ShopcontextProvider = (props) => {
     for (const item in cartItems) {
       totalCount += cartItems[item].amount;
       console.log(typeof totalCount);
-      
     }
 
     return totalCount;
   };
 
-  // const updateQuantitiy = async (itemId, amount)=>{
-  //   let cartData = structuredClone(cartItems)
-  //   cartData[itemId] = { amount: Number(amount) }
-
-  //   setCartItems(cartData)
-  //   console.log(cartItems);
-    
-  // }
-
+  //  --------------- TO DELETE AND UPDATE THE CART-----------------
   const updateQuantitiy = async (itemId, amount) => {
-    let cartData = structuredClone(cartItems);
+    let cartData = structuredClone(cartItems); // Ensure compatibility if needed
     if (amount === 0) {
       delete cartData[itemId];
     } else {
       cartData[itemId]["amount"] = Number(amount);
     }
     setCartItems(cartData);
-  }
+  };
 
-  // useEffect(() => {
-  //   console.log(cartItems);
-  // }, [cartItems]);
+  //  --------------TO GET TO AMOUNT-----------------
+  const getCartAmount = () => {
+    let totalAmount = 0;
+    for (const itemId in cartItems) {
+      const product = products.find((p) => p._id === itemId);
+      if (product && cartItems[itemId].amount > 0) {
+        totalAmount += product.price * cartItems[itemId].amount;
+      }
+    }
+    return totalAmount;
+  };
 
   const value = {
     products,
     currency,
+    getCartAmount, // Removed undefined `totalAmount`
     updateQuantitiy,
     delivery_fee,
     addToCart,
@@ -73,6 +72,7 @@ const ShopcontextProvider = (props) => {
     showSearch,
     setShowSearch,
   };
+
   return (
     <Shopcontext.Provider value={value}>{props.children}</Shopcontext.Provider>
   );
