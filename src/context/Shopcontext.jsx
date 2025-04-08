@@ -29,10 +29,31 @@ const ShopcontextProvider = (props) => {
     let totalCount = 0;
     for (const item in cartItems) {
       totalCount += cartItems[item].amount;
+      console.log(typeof totalCount);
+      
     }
 
     return totalCount;
   };
+
+  // const updateQuantitiy = async (itemId, amount)=>{
+  //   let cartData = structuredClone(cartItems)
+  //   cartData[itemId] = { amount: Number(amount) }
+
+  //   setCartItems(cartData)
+  //   console.log(cartItems);
+    
+  // }
+
+  const updateQuantitiy = async (itemId, amount) => {
+    let cartData = structuredClone(cartItems);
+    if (amount === 0) {
+      delete cartData[itemId];
+    } else {
+      cartData[itemId]["amount"] = Number(amount);
+    }
+    setCartItems(cartData);
+  }
 
   // useEffect(() => {
   //   console.log(cartItems);
@@ -41,6 +62,7 @@ const ShopcontextProvider = (props) => {
   const value = {
     products,
     currency,
+    updateQuantitiy,
     delivery_fee,
     addToCart,
     setCartItems,

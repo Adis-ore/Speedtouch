@@ -22,6 +22,7 @@ a.active hr{
     /* color: red; */
   }
   
+  
   ::-webkit-scrollbar{
     display: none;
   }

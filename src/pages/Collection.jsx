@@ -1,3 +1,4 @@
+import { AiOutlineShoppingCart } from "react-icons/ai"; 
 import React, { useContext, useEffect, useState } from "react";
 import { Shopcontext } from "../context/Shopcontext";
 import { IoIosArrowForward } from "react-icons/io";
@@ -5,12 +6,12 @@ import Title from "../components/Title";
 import Productitem from "../components/Productitem";
 
 const Collection = () => {
-  const { products, search, showSearch } = useContext(Shopcontext);
+  const { products, search, showSearch, addToCart } = useContext(Shopcontext);
   const [showFilter, setShowFilter] = useState(false);
   const [filterProduct, setFilterProduct] = useState([]);
   const [category, setCategory] = useState([]);
   const [subcategory, setSubCategory] = useState([]);
-  const [sortType, setSortType]  = useState('relevant')
+  const [sortType, setSortType] = useState("relevant");
 
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
@@ -32,7 +33,9 @@ const Collection = () => {
     let productsCopy = products.slice();
 
     if (showSearch && search) {
-      productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+      productsCopy = productsCopy.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
 
     // Filter by category
@@ -58,10 +61,10 @@ const Collection = () => {
 
     switch (sortType) {
       case "low-high":
-        setFilterProduct(fpCopy.sort((a,b)=>(a.price - b.price)));
+        setFilterProduct(fpCopy.sort((a, b) => a.price - b.price));
         break;
       case "high-low":
-        setFilterProduct(fpCopy.sort((a,b)=>(b.price - a.price)));
+        setFilterProduct(fpCopy.sort((a, b) => b.price - a.price));
         break;
 
       default:
@@ -75,8 +78,8 @@ const Collection = () => {
   }, [category, subcategory, search, showSearch]);
 
   useEffect(() => {
-    sortProduct()
-  }, [sortType])
+    sortProduct();
+  }, [sortType]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
@@ -172,7 +175,8 @@ const Collection = () => {
           <Title text1={"ALL"} text2={"PRODUCTS"} />
           {/* product sort */}
           <select
-            className="border-2 border-gray-300 text-sm px-2" onChange={(e)=>setSortType(e.target.value)}
+            className="border-2 border-gray-300 text-sm px-2"
+            onChange={(e) => setSortType(e.target.value)}
             name=""
             id=""
           >
@@ -184,13 +188,18 @@ const Collection = () => {
         {/* map products */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
           {filterProduct.map((items, index) => (
-            <Productitem
-              key={index}
-              name={items.name}
-              id={items._id}
-              image={items.image}
-              price={items.price}
-            />
+            <div>
+              <Productitem
+                key={index}
+                name={items.name}
+                id={items._id}
+                image={items.image}
+                price={items.price}
+              />
+              <button onClick={()=>addToCart(items._id)} className="bg-black text-white p-4 flex items-center justify-center py-2 mt-3 rounded-md hover:bg-gray-800 transition duration-300 ease-in-out">
+                <AiOutlineShoppingCart />
+              </button>
+            </div>
           ))}
         </div>
       </div>

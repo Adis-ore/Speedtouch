@@ -1,26 +1,27 @@
-import { IoIosArrowForward } from "react-icons/io"; 
+import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { BiSearch } from "react-icons/bi";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { Shopcontext } from "../context/Shopcontext";
 
-
 const Navbar = () => {
-
   const [visible, setVisible] = useState(false);
-  const {setShowSearch, getCartCount} = useContext(Shopcontext)
+  const { setShowSearch, getCartCount } = useContext(Shopcontext);
+  useEffect(() => {
+    console.log(getCartCount());
+  }, [getCartCount]);
 
   return (
     // the navbar body/ container
     <div className="flex items-center justify-between py-5 font-medium ">
       {/* logo */}
       <Link to="/">
-        <img src={assets.forever} className="w-36 max-sm:w-20" alt="" /> 
+        <img src={assets.forever} className="w-36 max-sm:w-20" alt="" />
       </Link>
       {/* containing the home and likes */}
       <ul className=" hidden sm:flex gap-5 text-sm  text-gray-700">
@@ -44,7 +45,10 @@ const Navbar = () => {
       </ul>
       {/*------------------ containing the search and profile icon------------------  */}
       <div className="flex items-center gap-4">
-        <FiSearch onClick={()=>setShowSearch(true)} className="cursor-pointer" />
+        <FiSearch
+          onClick={() => setShowSearch(true)}
+          className="cursor-pointer"
+        />
         {/*------------------ the profile icon ------------------*/}
         <div className="group relative">
           <CgProfile className="w-5 cursor-pointer" />
@@ -62,20 +66,54 @@ const Navbar = () => {
           </p>
           <AiOutlineShoppingCart />
         </Link>
-        <AiOutlineMenu onClick={()=>setVisible(true)} className="cursor-pointer sm:hidden" />
+        <AiOutlineMenu
+          onClick={() => setVisible(true)}
+          className="cursor-pointer sm:hidden"
+        />
       </div>
       {/* --------------- side bar menu for small screen -------------------- */}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible? 'w-full' : 'w-0'}`}>
+      <div
+        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
+          visible ? "w-full" : "w-0"
+        }`}
+      >
         <div className=" flex flex-col text-gray-500">
-          <div onClick={()=>setVisible(false)} className="flex items-center gap-4 p-3 cursor-pointer">
+          <div
+            onClick={() => setVisible(false)}
+            className="flex items-center gap-4 p-3 cursor-pointer"
+          >
             {/*-------------------- the back function --------------------------- */}
             <IoIosArrowForward className="h-4 rotate-180" />
             <p>Back</p>
           </div>
-          <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border' to='/'>HOME</NavLink>
-          <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border' to='/collection'>PRODUCTS</NavLink>
-          <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border' to='/about'>ABOUT</NavLink>
-          <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border' to='/contact'>CONTACT</NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 border"
+            to="/"
+          >
+            HOME
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 border"
+            to="/collection"
+          >
+            PRODUCTS
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 border"
+            to="/about"
+          >
+            ABOUT
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 border"
+            to="/contact"
+          >
+            CONTACT
+          </NavLink>
         </div>
       </div>
     </div>
