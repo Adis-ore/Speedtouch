@@ -3,6 +3,7 @@ import { TbCurrencyNaira } from "react-icons/tb";
 import { createContext } from "react";
 import { products } from "../assets/assets";
 import { useState } from "react"; // Removed unused `useEffect`
+import { useNavigate } from "react-router-dom";
 
 export const Shopcontext = createContext();
 
@@ -12,6 +13,8 @@ const ShopcontextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  // ------------- TO  NAVIGATE--------------
+  const navigate = useNavigate()
 
   //  ------------- ADD TO CART ----------------
   const addToCart = async (itemId) => {
@@ -71,6 +74,7 @@ const ShopcontextProvider = (props) => {
     setSearch,
     showSearch,
     setShowSearch,
+    navigate
   };
 
   return (
